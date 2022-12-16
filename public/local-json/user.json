@@ -1,0 +1,23 @@
+ [
+
+    {
+     "id":1,
+     "name": "Mobile" ,
+     "price": 1000 , 
+     "quantity": 10
+    },
+
+    {
+        "id":2,
+        "name": "Mobile" ,
+        "price": 1000 , 
+        "quantity": 10
+    },
+
+    {
+        "id":3,
+        "name": "Mobile" ,
+        "price": 1000 , 
+        "quantity": 10
+    }  
+]

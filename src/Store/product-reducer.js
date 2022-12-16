@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const intialData = JSON.parse(localStorage.getItem('products'))
-const intitalPrductState = {products: intialData}
+
+const intitalPrductState = {products: []}
 const productSlice = createSlice({
     name: 'product',
     initialState: intitalPrductState,

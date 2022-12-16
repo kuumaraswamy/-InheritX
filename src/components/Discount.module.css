@@ -1,0 +1,13 @@
+.discount{
+    margin: '20px';
+    textAlign: 'center';
+}
+.discount form {
+    display: 'flex';
+    flexDirection: 'column';
+    alignItems: 'center';
+}
+.form {
+    fontWeight: 'bold';
+
+}

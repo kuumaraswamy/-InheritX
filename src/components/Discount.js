@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
+import React, {  useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productAction } from '../Store/product-reducer';
+import { addingNewProduct } from '../Store/product-actiosn';
+
+
 
 const ProductList = () => {
   const allproduct = useSelector(state =>  state.product.products)
-
- console.log(allproduct.map(item => item))
+ console.log(allproduct)
   const dispatch = useDispatch()
+  const enteredName = useRef('')
+  const enteredPrice = useRef('')
+  const enteredQuantity = useRef('')
   const [formData, setFormData] = useState({
     name: '',
     price: 0,
     quantity: 0
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  }
+
+
+
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, price, quantity } = formData;
+    const name = enteredName.current.value;
+    const price = enteredPrice.current.value;
+    const quantity = enteredQuantity.current.value;
+
+    // const { name, price, quantity } = formData;
     if (name && price && quantity > 0) {
       let discount = 0;
       if (quantity > 10) {
@@ -34,12 +46,14 @@ const ProductList = () => {
       }
       const totalPrice = price * quantity * (1 - discount);
       const  obj = {
+        id: Math.floor(Math.random() * 100),
         name,
         price,
         quantity,
+    
         totalPrice
       };
-      dispatch(productAction.addingNewProduct(obj))
+      dispatch(addingNewProduct(obj))
       setFormData({
         name: '',
         price: 0,
@@ -55,68 +69,65 @@ const ProductList = () => {
     alert('Order placed successfully');
   }
 
-  const initializeData = () => {
-    //const products = JSON.parse(localStorage.getItem('products'));
-   
-  }
+
 
   return (
-    <div>
-      {allproduct.length === 0 &&
-        <button type="button" onClick={initializeData}>Retrieve Data From Local Storage</button>
-      }
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
+    <div style={{ margin: '20px', textAlign: 'center' }} >
+      
+      
+      <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} onSubmit={handleSubmit}>
+        <div >
+          <label style={{ fontWeight: 'bold' }} >Name : </label>
           <input
             name="name"
-            value={formData.name}
-            onChange={handleChange}
+            style={{ border: '1px solid #ccc', padding: '8px', margin: '10px 0' }}
+            ref={enteredName}
+          
           />
         </div>
         <div>
-          <label>Price</label>
+          <label style={{ fontWeight: 'bold' }}>Price : </label>
           <input
             name="price"
-            value={formData.price}
-            onChange={handleChange}
+            style={{ border: '1px solid #ccc', padding: '10px', margin: '15px 0' }}
+            ref={enteredPrice}
           />
         </div>
         <div>
-          <label>Quantity</label>
+          <label style={{ fontWeight: 'bold' }}>Quantity : </label>
           <input
             name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
+            style={{ border: '1px solid #ccc', padding: '8px', margin: '8px 0' }}
+            ref={enteredQuantity}
           />
         </div>
         <div>
-          <button type="submit" >Add To List</button>
+          <button type="submit" style={{ border: 'none', backgroundColor: '#333', color: '#fff', padding: '8px 16px' }}>Add To List</button>
         </div>
       </form>
-      <table>
+      <table style={{ margin: '20px 0', borderCollapse: 'collapse', width: '100%' }}>
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-          </tr>
+          <tr style={{ backgroundColor: '#eee' }}>
+            <th style={{ border: '1px solid #ccc', padding: '8px' }}>Name</th>
+            <th style={{ border: '1px solid #ccc', padding: '8px' }}>Price</th>
+            <th style={{ border: '1px solid #ccc', padding: '8px' }}>Quantity</th>
+            <th style={{ border: '1px solid #ccc', padding: '8px' }}>Total Price</th>
+          </tr >
         </thead>
         <tbody>
-          {allproduct.map((product, index) => (
-            <tr key={index}>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>{product.quantity}</td>
-              <td>{product.totalPrice.toFixed(2)}</td>
+           {allproduct?.map((product, index) => (
+            <tr key={index} style={{ border: '1px solid gray' }}>
+              <td style={{ border: '1px solid gray' }}>{product.name}</td>
+              <td style={{ border: '1px solid gray' }}>{product.price}</td>
+              <td style={{ border: '1px solid gray' }}>{product.quantity}</td>
+              <td style={{ border: '1px solid gray' }}>{product.totalPrice.toFixed(2)}</td>
             </tr>
-          ))}
+          ))} 
         </tbody>
       </table>
-      {allproduct.length > 0 &&
-        <button type="button" onClick={handlePlaceOrder}>Place Order</button>
-      }
+     
+        <button type="button" onClick={handlePlaceOrder} style={{ border: '1px solid gray', borderRadius: '4px', backgroundColor: 'lightgray' }}>Place Order</button>
+      
     </div>
   );
 }
