@@ -6,7 +6,7 @@ export const fetchingAllData =  () => {
         const fetchdata = async() => {
             console.log('hello')
             try{
-               const res = await axios.get('https://crudcrud.com/api/6fefbbc49d194dc79c78d27d13b425fb/products')
+               const res = await axios.get('https://crudcrud.com/api/1884797495574456b0541e5e629dbbf6/products')
             
               return res.data
             }
@@ -24,7 +24,7 @@ export const addingNewProduct =  (obj) => {
         const addProduct = async() => {
             console.log('hello')
             try{
-               const res = await axios.post('https://crudcrud.com/api/6fefbbc49d194dc79c78d27d13b425fb/products', obj)
+               const res = await axios.post('https://crudcrud.com/api/1884797495574456b0541e5e629dbbf6/products', obj)
             
               return res.data
             }
